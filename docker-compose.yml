@@ -1,0 +1,17 @@
+version: "3"
+services:
+  db:
+    image: mysql:8.0.16
+    volumes:
+      - db-store:/var/lib/mysql
+      - ./logs:/var/log/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - TZ=${TZ}
+    ports:
+      - ${DB_PORT}:3306
+
+volumes:
+  db-store:
+    driver: local
