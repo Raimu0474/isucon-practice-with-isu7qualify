@@ -542,8 +542,19 @@ app.get("/icons/:fileName", getIcon);
 function getIcon(req, res) {
   const { fileName } = req.params;
 
-  const imgFile = fs.readFileSync(`./img/${fileName}`);
-  res.send(imgFile);
+  try {
+    const imgFile = fs.readFileSync(`./img/${fileName}`);
+    const ext = path.extname(fileName) || "";
+    const mime = ext2mime(ext);
+    if (!imgFile || !mime) {
+      res.status(404).end();
+      return;
+    }
+    res.header({ "Content-Type": mime }).end(imgFile);
+  } catch (e) {
+    console.error(e);
+  }
+
   return;
 }
 
