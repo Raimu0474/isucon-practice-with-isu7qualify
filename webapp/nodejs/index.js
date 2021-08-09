@@ -497,10 +497,15 @@ function postProfile(req, res) {
       }
     }
     if (avatarName && avatarData) {
+      try {
+        fs.writeFileSync(`./img/${avatarName}`, avatarData);
+      } catch (e) {
+        console.error(e);
+      }
       p = p.then(() =>
         pool.query("INSERT INTO image (name, data) VALUES (?, _binary ?)", [
           avatarName,
-          avatarData,
+          "",
         ])
       );
       p = p.then(() =>
