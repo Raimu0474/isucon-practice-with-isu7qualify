@@ -1,7 +1,8 @@
 version: "3"
 services:
   db:
-    image: mysql:8.0.16
+    #image: mysql:8.0.16
+    #image: mysql@sha256:68b207d01891915410db3b5bc1f69963e3dc8f23813fd01e61e6d7e7e3a46680
     volumes:
       - db-store:/var/lib/mysql
       - ./logs:/var/log/mysql
